@@ -1,13 +1,12 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json");
-$host = "localhost";
-$user = "root";
-$password = "";
-$db = "planificador";
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db = 'planificador';
 
-$conn = new mysqli($host, $user, $password, $db);
-if ($conn->connect_error) {
-    die(json_encode(["error" => "Conexión fallida: " . $conn->connect_error]));
+$conexion = new mysqli($host, $user, $pass, $db);
+if ($conexion->connect_error) {
+    die("Conexión fallida: " . $conexion->connect_error);
 }
+$conexion->set_charset("utf8");
 ?>
