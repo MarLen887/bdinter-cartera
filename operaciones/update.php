@@ -1,19 +1,24 @@
 <?php
-include '../db.php';
-$data = json_decode(file_get_contents("php://input"));
+include 'db.php';
 
-$sql = "UPDATE operaciones SET 
-    tipo_operacion = '{$data->tipo_operacion}',
-    tipo_pago = '{$data->tipo_pago}',
-    monto = '{$data->monto}',
-    fecha = '{$data->fecha}',
-    id_categoria = '{$data->id_categoria}',
-    banco_id = '{$data->banco_id}'
-    WHERE id = {$data->id} AND usuario_id = {$data->usuario_id}";
+$id = $_POST['id'];
+$tipo_operacion = $_POST['tipo_operacion'];
+$tipo_pago = $_POST['tipo_pago'];
+$monto = $_POST['monto'];
+$fecha = $_POST['fecha'];
+$id_categoria = $_POST['id_categoria'];
+$usuario_id = $_POST['usuario_id'];
+$banco_id = $_POST['banco_id'];
 
-if ($conn->query($sql)) {
-    echo json_encode(["status" => "success"]);
-} else {
-    echo json_encode(["status" => "error", "message" => $conn->error]);
-}
+$query = "UPDATE operaciones SET
+            tipo_operacion='$tipo_operacion',
+            tipo_pago='$tipo_pago',
+            monto='$monto',
+            fecha='$fecha',
+            id_categoria='$id_categoria',
+            usuario_id='$usuario_id',
+            banco_id='$banco_id'
+          WHERE id=$id";
+
+echo $conexion->query($query) ? "ok" : "error";
 ?>

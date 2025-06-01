@@ -1,19 +1,16 @@
 <?php
-include '../db.php';
-$data = json_decode(file_get_contents("php://input"));
+include 'db.php';
 
-$sql = "INSERT INTO operaciones (tipo_operacion, tipo_pago, monto, fecha, id_categoria, usuario_id, banco_id) VALUES (
-  '{$data->tipo_operacion}',
-  '{$data->tipo_pago}',
-  '{$data->monto}',
-  '{$data->fecha}',
-  '{$data->id_categoria}',
-  '{$data->usuario_id}',
-  '{$data->banco_id}'
-)";
-if ($conn->query($sql)) {
-    echo json_encode(["status" => "success"]);
-} else {
-    echo json_encode(["status" => "error", "message" => $conn->error]);
-}
+$tipo_operacion = $_POST['tipo_operacion'];
+$tipo_pago = $_POST['tipo_pago'];
+$monto = $_POST['monto'];
+$fecha = $_POST['fecha'];
+$id_categoria = $_POST['id_categoria'];
+$usuario_id = $_POST['usuario_id'];
+$banco_id = $_POST['banco_id'];
+
+$query = "INSERT INTO operaciones (tipo_operacion, tipo_pago, monto, fecha, id_categoria, usuario_id, banco_id)
+          VALUES ('$tipo_operacion', '$tipo_pago', '$monto', '$fecha', '$id_categoria', '$usuario_id', '$banco_id')";
+
+echo $conexion->query($query) ? "ok" : "error";
 ?>

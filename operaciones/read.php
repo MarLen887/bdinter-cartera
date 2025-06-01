@@ -1,12 +1,26 @@
 <?php
 include '../db.php';
-$userId = $_GET['usuario_id'];
-$sql = "SELECT * FROM operaciones WHERE usuario_id = $userId";
-$result = $conn->query($sql);
 
-$rows = [];
+$query = "
+SELECT 
+  o.id,
+  o.tipo_operacion,
+  o.tipo_pago,
+  o.monto,
+  o.fecha,
+  b.nombre AS banco,
+  c.establecimiento AS categoria
+FROM operaciones o
+JOIN bancos b ON o.banco_id = b.id
+JOIN categorias c ON o.id_categoria = c.id
+";
+
+$result = $conexion->query($query);
+$data = [];
+
 while ($row = $result->fetch_assoc()) {
-    $rows[] = $row;
+  $data[] = $row;
 }
-echo json_encode($rows);
+
+echo json_encode($data);
 ?>
